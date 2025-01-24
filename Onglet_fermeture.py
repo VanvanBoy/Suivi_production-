@@ -37,8 +37,6 @@ def create_fermeture_interface(tab,conn,cursor):
         tension=float(tension_entry.get())
         date=datetime.now()
         
-        
-        
         query="select bv.Tension_max, bv.Tension_min from bibliotheque_batteries_voltr as bv join suivi_production as sp on bv.reference_batterie = sp.Reference_batterie_voltr where sp.numero_serie_batterie=%s"
         param=(num_batt,)
         cursor.execute(query,param)
