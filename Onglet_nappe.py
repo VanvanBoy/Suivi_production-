@@ -85,6 +85,7 @@ def create_nappe_interface(tab,conn,cursor):
     ctrl_label = tk.Label(right_frame, text="Controle soudure nappes:", font=('Arial', 12))
     ctrl_label.pack(pady=5)
     ctrl_combobox = ttk.Combobox(right_frame,values=['Yes','No'], font=('Arial', 12))
+    ctrl_combobox.set('Yes')
     ctrl_combobox.pack(pady=5)
     
     ctrl2_label = tk.Label(right_frame, text="Ecart tension modules:", font=('Arial', 12))

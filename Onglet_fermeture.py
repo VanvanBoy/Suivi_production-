@@ -48,11 +48,11 @@ def create_fermeture_interface(tab,conn,cursor):
             etat=0
            
         if commentaire:
-            query="UPDATE suivi_production set fermeture_batt=%s, date_fermeture_batt=%s,commentaire=%s where numero_serie_batterie=%s"
-            param=(etat,date,commentaire,num_batt)
+            query="UPDATE suivi_production set fermeture_batt=%s, date_fermeture_batt=%s,Test_tension=%s,date_test_tension=%s,commentaire=%s where numero_serie_batterie=%s"
+            param=(etat,date,tension,date,commentaire,num_batt)
         else : 
-            query="UPDATE suivi_production set fermeture_batt=%s, date_fermeture_batt=%s where numero_serie_batterie=%s"
-            param=(etat,date,num_batt)
+            query="UPDATE suivi_production set fermeture_batt=%s, date_fermeture_batt=%s,Test_tension=%s,date_test_tension=%s where numero_serie_batterie=%s"
+            param=(etat,date,tension,date,num_batt)
         if etat==1:
             messagebox.showinfo("Succès!","Point de controle fermeture OK! Passage à l'etape suivante")
         else : 
@@ -87,6 +87,7 @@ def create_fermeture_interface(tab,conn,cursor):
     ctrl_label = tk.Label(right_frame, text="Controle fermeture:", font=('Arial', 12))
     ctrl_label.pack(pady=5)
     ctrl_combobox = ttk.Combobox(right_frame,values=['Yes','No'], font=('Arial', 12))
+    ctrl_combobox.set('Yes')
     ctrl_combobox.pack(pady=5)
     
     ctrl2_label = tk.Label(right_frame, text="Controle tensions pack:", font=('Arial', 12))
