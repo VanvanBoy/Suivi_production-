@@ -16,6 +16,7 @@ from Onglet_nappe import create_nappe_interface
 from Onglet_fermeture import create_fermeture_interface
 from Onglet_bms import create_bms_interface
 from Onglet_wrap import create_wrap_interface
+from Onglet_test_capa import create_test_interface
 
 import mysql.connector
 from mysql.connector.locales.eng import client_error
@@ -95,6 +96,11 @@ def main():
             for widget in tab6.winfo_children():
              widget.destroy()
             create_fermeture_interface(tab6, conn, cursor)
+        elif selected_tab =="Test capa":
+            for widget in tab7.winfo_children():
+             widget.destroy()
+            create_test_interface(tab7, conn, cursor)
+            
             
      
     # Création de la fenêtre principale + titre et dimensions
@@ -112,6 +118,7 @@ def main():
     tab4 = ttk.Frame(tab_control)
     tab5 = ttk.Frame(tab_control)
     tab6 = ttk.Frame(tab_control)
+    tab7 = ttk.Frame(tab_control)
     
     # Ajouter les onglets à l'interface à onglets 
     tab_control.add(tab1, text="Controle de picking")
@@ -120,6 +127,7 @@ def main():
     tab_control.add(tab4, text="Controle soudure BMS")
     tab_control.add(tab5, text="Controle wrap")
     tab_control.add(tab6, text="Controle fermeture")
+    tab_control.add(tab7, text="Test capa")
     
     # Placer l'interface à onglets dans la fenêtre principale
     tab_control.pack(expand=1, fill="both")
