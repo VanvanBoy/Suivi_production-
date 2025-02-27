@@ -56,6 +56,11 @@ def create_bms_interface(tab,conn,cursor):
             messagebox.showerror("Fail!","Point de controle BMS NON OK!")
             
         cursor.execute(query,param)
+        
+        numero_serie_cell_entry.delete(0,tk.END)
+        numero_serie_batt_entry.delete(0,tk.END)
+        text_box.delete("1.0",tk.END)
+        
         conn.commit()
         
 
@@ -91,7 +96,6 @@ def create_bms_interface(tab,conn,cursor):
     label.pack(pady=10)
     text_box = tk.Text(right_frame, height=10, width=50)
     text_box.pack(pady=10)
-
     
     # Bouton Sauvegarder
     submit_button = tk.Button(right_frame, text="Process", command=etape_bms, font=('Arial', 12), bg='blue', fg='white')

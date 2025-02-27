@@ -54,6 +54,10 @@ def create_pack_interface(tab,conn,cursor):
             messagebox.showerror("Fail!","Point de controle soudure du pack NON OK!")
             
         cursor.execute(query,param)
+        numero_serie_cell_entry.delete(0,tk.END)
+        numero_serie_batt_entry.delete(0,tk.END)
+        text_box.delete("1.0",tk.END)
+        
         conn.commit()
         
 

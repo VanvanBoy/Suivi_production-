@@ -52,17 +52,6 @@ def main():
         auth_plugin='mysql_native_password'
     )
     """
-    """
-    #BBD local utilisée pour les test Antoine 
-    conn = mysql.connector.connect(
-        host="localhost",
-        user='root',
-        password='password',
-        port=3307,
-        database="cellules_batteries_cloud",
-        auth_plugin='mysql_native_password'
-    )
-    """
     #Creation du curseur sql
     cursor = conn.cursor()
     
