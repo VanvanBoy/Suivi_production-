@@ -20,7 +20,7 @@ def create_fermeture_interface(tab,conn,cursor):
         if len(num_cell) >= 12:
             numero_serie_cell_entry.unbind('<KeyRelease>')
             try:
-                cursor.execute("SELECT affectation_produit FROM cellules WHERE numero_serie_cellule = %s", (num_cell,))
+                cursor.execute("SELECT affectation_produit FROM cellule WHERE numero_serie_cellule = %s", (num_cell,))
                 produit = cursor.fetchall()[0][0]
                 num_produit = str(produit)
                 numero_serie_batt_entry.delete(0, tk.END)  # Effacer l'entrée avant d'insérer
@@ -37,7 +37,7 @@ def create_fermeture_interface(tab,conn,cursor):
         tension=float(tension_entry.get())
         date=datetime.now()
         
-        query="select bv.Tension_max, bv.Tension_min from bibliotheque_batteries_voltr as bv join suivi_production as sp on bv.reference_batterie = sp.Reference_batterie_voltr where sp.numero_serie_batterie=%s"
+        query="select bv.Tension_max, bv.Tension_min from ref_batterie_voltr as bv JOIN produit_voltr AS pv ON bv.reference_batterie_voltr = pv.reference_produit_voltr JOIN suivi_production AS sp ON sp.numero_serie_batterie = pv.numero_serie_produit where sp.numero_serie_batterie=%s"
         param=(num_batt,)
         cursor.execute(query,param)
         T_max,T_min=cursor.fetchall()[0]

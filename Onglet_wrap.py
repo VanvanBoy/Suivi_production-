@@ -20,7 +20,7 @@ def create_wrap_interface(tab,conn,cursor):
         if len(num_cell) >= 12:
             numero_serie_cell_entry.unbind('<KeyRelease>')
             try:
-                cursor.execute("SELECT affectation_produit FROM cellules WHERE numero_serie_cellule = %s", (num_cell,))
+                cursor.execute("SELECT affectation_produit FROM cellule WHERE numero_serie_cellule = %s", (num_cell,))
                 produit = cursor.fetchall()[0][0]
                 num_produit = str(produit)
                 numero_serie_batt_entry.delete(0, tk.END)  # Effacer l'entrée avant d'insérer

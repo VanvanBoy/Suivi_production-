@@ -106,7 +106,7 @@ def create_test_interface(tab, conn, cursor):
                         capa_dch=float(col_capa[0])
                         
                         #Verification du SOH
-                        cursor.execute("SELECT b.Capacite FROM suivi_production sp JOIN bibliotheque_batteries_voltr b ON sp.reference_batterie_voltr = b.Reference_batterie WHERE sp.Numero_serie_batterie = %s", (numero_serie_batt,))
+                        cursor.execute("SELECT b.Capacite FROM suivi_production sp JOIN ref_batterie_voltr b ON sp.reference_batterie_voltr = b.Reference_batterie_voltr WHERE sp.Numero_serie_batterie = %s", (numero_serie_batt,))
                         
                         capa_cible = cursor.fetchone()[0] if cursor.rowcount else None
                         
