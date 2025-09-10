@@ -1,0 +1,6 @@
+('C:\\Users\\User\\Desktop\\GitHub\\IHM suivi de '
+ 'prod\\build\\Suivi_de_production_beta_2\\tkcalendar-1.6.1-py3.11.egg',
+ None,
+ {'EGG-INFO', '*.pyc', '*.py', '*.pyd', '*.pyw', '*.cp311-win_amd64.pyd'},
+ 'DATA',
+ [])

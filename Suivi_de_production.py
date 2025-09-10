@@ -40,18 +40,7 @@ def main():
         database="cellules_batteries_cloud",
         auth_plugin='mysql_native_password'
     ) 
-    """
-    
-    #BBD local utilisée pour les test Vanvan
-    conn = mysql.connector.connect(
-        host="localhost",
-        user='root',
-        password='VoltR99!',
-        port=3306,
-        database="cellules_batteries_cloud",
-        auth_plugin='mysql_native_password'
-    )
-    """
+
     #Creation du curseur sql
     cursor = conn.cursor()
     
