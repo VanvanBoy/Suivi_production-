@@ -245,6 +245,7 @@ class StockApp(ThemedTk):
 
             self.selected_model = ref
             self.stage_order = stage_order
+            
             dlg.destroy()
 
         ttk.Button(dlg, text="Lancer l'application", style="Good.TButton", command=on_launch).pack(pady=16)
@@ -264,6 +265,26 @@ class StockApp(ThemedTk):
 
         
         self._create_widgets_with_order()
+        
+        stage_to_func = {
+            'picking': self.display_model_list,
+            'pack':  self.display_model_list_pack,
+            'bms':  self.display_model_list_bms,
+            'fermeture_batt':  self.display_model_list_fermeture,
+            'emb':  self.display_model_list_emballage,
+            'exp':  self.display_model_list_exp,
+            'nappe':  self.display_model_list_nappe,
+            'wrap':  self.display_model_list_wrap,
+        }
+        
+        self.funcs_to_run= [
+            stage_to_func[k]
+            for k, v in sorted(self.stage_order.items(), key=lambda kv: kv[1])
+            if v > 0 and k in stage_to_func
+        ]
+        
+        for f in self.funcs_to_run:
+            print(f.__name__)
 
 
     def _create_widgets_with_order(self):
@@ -298,6 +319,7 @@ class StockApp(ThemedTk):
         notebook = ttk.Notebook(self)
         notebook.pack(expand=True, fill="both")
         
+        self.list_fct=[]
 
         for key in ordered_keys:
             title, setup_fn = stage_defs[key]
@@ -305,6 +327,7 @@ class StockApp(ThemedTk):
             frame = ttk.Frame(notebook)
             notebook.add(frame, text=title)
             setup_fn(frame)
+            self.list_fct.append(setup_fn)
 
     
     def set_photo(self, label: tk.Label, chemin_image: str, size=(200, 200)):
@@ -510,8 +533,21 @@ class StockApp(ThemedTk):
             return
         try: 
             cursor= conn.cursor()
-            query=self.build_stage_query(stage_act)
-            param=(modele,)
+            if modele[:8]=="PPTR018A":
+                query="""
+                SELECT sp.numero_serie_batterie
+                FROM suivi_production AS sp
+                JOIN produit_voltr AS pv
+                  ON sp.numero_serie_batterie = pv.numero_serie_produit
+                WHERE pv.reference_produit_voltr LIKE %s
+                AND (sp.picking_tension = 0 or sp.picking_tension is null)
+                  """             
+                param=(modele[:8]+"%",)
+                
+                
+            else :
+                query=self.build_stage_query(stage_act)
+                param=(modele,)
             cursor.execute(query, param)
             rows = cursor.fetchall()  
     
@@ -581,15 +617,16 @@ class StockApp(ThemedTk):
         num_batt=str(self.numero_serie_batt_entry.get())
         if not num_batt:
             return
-        directive=self.verfier_coherence_ref(num_batt)
+        if str(self.selected_model)[:8]!='PPTR018A':
+            directive=self.verfier_coherence_ref(num_batt)
+            if directive=='stop':
+                return
         # 1) Pré-requis
         stage_col='picking'
         if not self._check_prereqs_and_warn(num_batt, stage_col):
             return
         conn = self.db_manager.connect()
         if not conn:
-            return
-        if directive=='stop':
             return
         try:
             cursor = conn.cursor()
@@ -607,6 +644,7 @@ class StockApp(ThemedTk):
             conn.close()
             messagebox.showinfo("Controle OK",f"Batterie {num_batt} controlée")
             self.numero_serie_batt_entry.delete(0, tk.END)
+            """
             self.display_model_list()
             self.display_model_list_pack()
             self.display_model_list_nappe()
@@ -615,6 +653,9 @@ class StockApp(ThemedTk):
             self.display_model_list_fermeture()
             self.display_model_list_emballage()
             self.display_model_list_exp()
+            """
+            for f in self.funcs_to_run:
+                f()
              
     def tension_defaut(self,event=None):
         defaut=str(self.combobox_default.get())
@@ -805,6 +846,20 @@ class StockApp(ThemedTk):
         ttk.Label(left_frame, text="N° série produit:").pack(pady=5)
         self.s_numero_serie_batt_entry = ttk.Entry(left_frame)
         self.s_numero_serie_batt_entry.pack(pady=5)
+        
+        if str(self.selected_model)[:8]=='PPTR018A':
+            
+            
+            ttk.Label(left_frame, text="Choisir une reference EOP").pack(pady=5)
+            
+            VALS = ["— choisir —", "PPTR018AA", "PPTR018AB", "PPTR018AC","PPTR018AD"]
+
+            # Variable liée
+            self.choice = tk.StringVar(value=VALS[0])
+                
+            self.s_mod_combobox=ttk.Combobox(left_frame, textvariable=self.choice, values=VALS, state="readonly", width=20)
+            self.s_mod_combobox.current(0)  # sélectionne l'élément par défaut
+            self.s_mod_combobox.pack(pady=5)
     
         ttk.Button(
             left_frame, text="❌ Non conforme",
@@ -841,7 +896,7 @@ class StockApp(ThemedTk):
             command=self.valider_soudure_pack,
             style="Good.TButton"
         ).pack(pady=10)
-    
+        
         self.display_model_list_pack()
 
     #Back
@@ -883,8 +938,23 @@ class StockApp(ThemedTk):
             return
         try: 
             cursor= conn.cursor()
-            query=self.build_stage_query(stage_act)
-            param=(modele,)
+            if modele[:8]=="PPTR018A":
+                query ="""
+                    SELECT sp.numero_serie_batterie
+                    FROM suivi_production AS sp
+                    JOIN produit_voltr AS pv
+                      ON sp.numero_serie_batterie = pv.numero_serie_produit
+                    WHERE sp.picking_tension = 1
+                      AND (sp.soudure_pack=0 or sp.soudure_pack is null)
+                      AND pv.reference_produit_voltr like %s
+                     """
+                param=(modele[:8]+"%",)
+                
+                
+            else :
+                
+                query=self.build_stage_query(stage_act)
+                param=(modele,)
             cursor.execute(query, param)
             rows = cursor.fetchall()  
     
@@ -908,6 +978,13 @@ class StockApp(ThemedTk):
             conn.close()
 
     def valider_soudure_pack(self):
+        
+        modele=str(self.selected_model)
+        if modele[:8]=='PPTR018A':
+            new_modele=self.s_mod_combobox.get()
+            if new_modele=="— choisir —":
+                messagebox.showerror("Modele EOP","Choisir un modele d'EOP")
+                return
         num_batt=str(self.s_numero_serie_batt_entry.get())
         # 1) Pré-requis
         stage_col='pack'
@@ -916,14 +993,22 @@ class StockApp(ThemedTk):
         conn = self.db_manager.connect()
         if not conn:
             return
-        directive=self.verfier_coherence_ref(num_batt)
-        if directive=='stop':
-            return
+        if modele[:8]!='PPTR018A':
+            directive=self.verfier_coherence_ref(num_batt)
+            if directive=='stop':
+                return
         try:
             cursor = conn.cursor()
             query = "UPDATE suivi_production SET soudure_pack = 1, date_soudure_pack = NOW() where numero_serie_batterie = %s "
             param = (num_batt,)  
             cursor.execute(query, param)
+            
+            if modele[:8]=='PPTR018A':
+            
+                query_modele='UPDATE produit_voltr set reference_produit_voltr= %s where numero_serie_produit = %s'
+                param_modele=(new_modele,num_batt)
+            cursor.execute(query_modele, param_modele)
+
         except Exception as e:
             messagebox.showerror("Erreur SQL", f"Impossible de récupérer les données :\n{e}")
         finally:
@@ -935,14 +1020,8 @@ class StockApp(ThemedTk):
             conn.close()
             messagebox.showinfo("Controle OK",f"Batterie {num_batt} controlée")
             self.s_numero_serie_batt_entry.delete(0, tk.END)
-            self.display_model_list()
-            self.display_model_list_pack()
-            self.display_model_list_nappe()
-            self.display_model_list_bms()
-            self.display_model_list_wrap()
-            self.display_model_list_fermeture()
-            self.display_model_list_emballage()
-            self.display_model_list_exp()
+            for f in self.funcs_to_run:
+                f()
             
             
     def add_non_conf_batterie_pack(self):
@@ -1192,15 +1271,8 @@ class StockApp(ThemedTk):
                 messagebox.showinfo("Controle OK",f"Batterie {num_batt} controlée")
                 self.n_numero_serie_batt_entry.delete(0, tk.END)
                 self.ecart_t_entry.delete(0, tk.END)
-                self.display_model_list()
-                self.display_model_list_pack()
-                self.display_model_list_nappe()
-                self.display_model_list_bms()
-                self.display_model_list_wrap()
-                self.display_model_list_fermeture()
-                self.display_model_list_emballage()
-                self.display_model_list_exp()
-            
+                for f in self.funcs_to_run:
+                    f()
             
     def add_non_conf_batterie_nappe(self):
         reponse = messagebox.askyesno("Non conformité", "Ouvrir une non-conformité ?")
@@ -1405,14 +1477,8 @@ class StockApp(ThemedTk):
             conn.close()
             messagebox.showinfo("Controle OK",f"Batterie {num_batt} controlée")
             self.b_numero_serie_batt_entry.delete(0, tk.END)
-            self.display_model_list()
-            self.display_model_list_pack()
-            self.display_model_list_nappe()
-            self.display_model_list_bms()
-            self.display_model_list_wrap()
-            self.display_model_list_fermeture()
-            self.display_model_list_emballage()
-            self.display_model_list_exp()
+            for f in self.funcs_to_run:
+                f()
             
             
     def add_non_conf_batterie_bms(self):
@@ -1604,14 +1670,8 @@ class StockApp(ThemedTk):
             conn.close()
             messagebox.showinfo("Controle OK",f"Batterie {num_batt} controlée")
             self.w_numero_serie_batt_entry.delete(0, tk.END)
-            self.display_model_list()
-            self.display_model_list_pack()
-            self.display_model_list_nappe()
-            self.display_model_list_bms()
-            self.display_model_list_wrap()
-            self.display_model_list_fermeture()
-            self.display_model_list_emballage()
-            self.display_model_list_exp()
+            for f in self.funcs_to_run:
+                f()
             
             
     def add_non_conf_batterie_wrap(self):
@@ -1830,14 +1890,8 @@ class StockApp(ThemedTk):
             conn.close()
             messagebox.showinfo("Controle OK",f"Batterie {num_batt} controlée")
             self.f_numero_serie_batt_entry.delete(0, tk.END)
-            self.display_model_list()
-            self.display_model_list_pack()
-            self.display_model_list_nappe()
-            self.display_model_list_bms()
-            self.display_model_list_wrap()
-            self.display_model_list_fermeture()
-            self.display_model_list_emballage()
-            self.display_model_list_exp()
+            for f in self.funcs_to_run:
+                f()
             
             
     def add_non_conf_batterie_fermeture(self):
@@ -2053,14 +2107,8 @@ class StockApp(ThemedTk):
             conn.close()
             messagebox.showinfo("Controle OK",f"Batterie {num_batt} controlée")
             self.emb_numero_serie_batt_entry.delete(0, tk.END)
-            self.display_model_list()
-            self.display_model_list_pack()
-            self.display_model_list_nappe()
-            self.display_model_list_bms()
-            self.display_model_list_wrap()
-            self.display_model_list_fermeture()
-            self.display_model_list_emballage()
-            self.display_model_list_exp()
+            for f in self.funcs_to_run:
+                f()
             
     def add_non_conf_batterie_emb(self):
         
@@ -3139,14 +3187,8 @@ class StockApp(ThemedTk):
             messagebox.showinfo("Succès", f"{len(numeros)} batterie(s) marquées expédiées.")
             self.send_listbox_batt.delete(0, tk.END)       # vide la sélection
             self._exp_update_counter()                      # remet le compteur à jour
-            self.display_model_list()
-            self.display_model_list_pack()
-            self.display_model_list_nappe()
-            self.display_model_list_bms()
-            self.display_model_list_wrap()
-            self.display_model_list_fermeture()
-            self.display_model_list_emballage()
-            self.display_model_list_exp()                # recharge les "disponibles"
+            for f in self.funcs_to_run:
+                f()              # recharge les "disponibles"
             self.exp_comm_entry.delete(0, tk.END)           # vide le commentaire
             
             
