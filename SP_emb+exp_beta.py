@@ -9,7 +9,7 @@ from openpyxl.utils import get_column_letter
 import os, re, shutil
 import io
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, simpledialog
 from ttkthemes import ThemedTk
 from PIL import Image, ImageTk
 import pandas as pd
@@ -19,19 +19,28 @@ from datetime import datetime
 from datetime import date
 from collections import defaultdict
 import qrcode
+#from pylibdmtx.pylibdmtx import encode
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.drawing.image import Image as OpenpyxlImage
 
 
-EXCEL_PATH = r"G:\Drive partagés\VoltR\11_Data\IHM\Suivi_prod_par_modele.xlsx"  
+EXCEL_PATH = r"G:\Drive partagés\VoltR\11_Data\IHM\Instructions IHM\Suivi_prod_par_modele.xlsx" 
 
 class DBManager:
     def __init__(self):
         
+        def get_db_credentials():
+            # Fonction pour obtenir les informations d'identification de l'utilisateur
+            user = simpledialog.askstring("Login", "Enter your MySQL username:")
+            password = simpledialog.askstring("Login", "Enter your MySQL password:", show='*')
+            return user, password
+        
+        self.user,self.password=get_db_credentials()
+        
         self.config = {
-            'user': 'Vanvan',
-            'password': 'VoltR99!',
+            'user': self.user ,
+            'password': self.password,
             'host': '34.77.226.40',
             'database': 'bdd_23102025',
             'auth_plugin': 'mysql_native_password'
@@ -273,7 +282,11 @@ class StockApp(ThemedTk):
             # mémorise le mapping tab -> stage
             self.tab_to_stage[str(frame)] = key
             
-    
+        # mappe les fonctions de refresh (remplace par tes vraies fonctions)
+        self.stage_refreshers = {
+            'emb':         self.display_emb,
+            'exp':         self.display_exp,
+        }
     
         # Bind: lorsque l’onglet change → reload immédiat + restart timer
         self.notebook.bind("<<NotebookTabChanged>>", self._on_tab_changed)
@@ -350,6 +363,40 @@ class StockApp(ThemedTk):
             # binding sûr sur le bouton lui-même
             submit_button.bind("<Return>", lambda e, b=submit_button: b.invoke())
             submit_button.bind("<space>", lambda e, b=submit_button: b.invoke())
+        
+    def display_emb(self):
+        ref_batt=self.emb_ref_combo.get()
+        if not ref_batt:
+            return
+        try:
+            first_frac, last_frac = self.emb_listbox_batt.yview()
+        except Exception:
+            first_frac = 0.0
+        self.emb_listbox_batt.delete(0, tk.END)
+        self.emb_on_select_ref(self)
+        try:
+            self.emb_listbox_batt.yview_moveto(first_frac)
+        except Exception:
+            pass
+
+        
+        
+    def display_exp(self):
+        ref_batt=self.ex_ref_combo.get()
+        mode=self.ex_mode_combo.get()
+        if not (ref_batt or mode):
+            return
+        try:
+            first_frac, last_frac = self.exp_listbox_batt.yview()
+        except Exception:
+            first_frac = 0.0
+        self.exp_listbox_batt.delete(0, tk.END)
+        self.ex_on_select_ref(self)
+        try:
+            self.exp_listbox_batt.yview_moveto(first_frac)
+        except Exception:
+            pass
+        
         
     
     def _get_active_stage(self) -> str | None:
@@ -615,10 +662,11 @@ class StockApp(ThemedTk):
         self.entry = tk.Entry(right_frame, textvariable=self.entry_var)#, state="readonly")  # readonly pour display only
         self.entry.pack(pady=5)
         
+        ttk.Label(right_frame, text="Liste des batteries emballées:").pack(pady=5)
+        
         listbox2_frame = tk.Frame(right_frame)
         listbox2_frame.pack(fill="both", expand=True, pady=5)
         
-        ttk.Label(right_frame, text="Liste des batteries emballées:").pack(pady=5)
         # Treeview avec 2 colonnes : numéro_serie et reference_produit
         self.emb_tree_f = ttk.Treeview(
             listbox2_frame,
@@ -680,6 +728,13 @@ class StockApp(ThemedTk):
         self.emb_listbox_batt.delete(0, tk.END)
         ref_prod=self.emb_ref_combo.get()
         conn = self.db_manager.connect()
+        if ref_prod[:8]=="PPTR018A":
+            self.check_var = tk.BooleanVar(value=True)
+            self.check.select() 
+        else :
+            self.check_var = tk.BooleanVar(value=False)
+            self.check.deselect() 
+            
         if not conn:
             messagebox.showerror("Erreur BDD", "Impossible de se connecter à la base de données.")
             return
@@ -807,6 +862,7 @@ class StockApp(ThemedTk):
                     ws_recap.cell(row=r_idx, column=c_idx, value=value)
         
             # --- Générer QR code (numéro d'emballage) et l'insérer ---
+            
             try:
                 qr = qrcode.QRCode(box_size=6, border=2)
                 qr.add_data(numero_emballage)
@@ -823,7 +879,28 @@ class StockApp(ThemedTk):
             except Exception as e:
                 # QR non critique : on ignore en cas d'erreur
                 print("Erreur génération QR:", e)
-        
+            
+            """
+            
+            
+            try:
+                # Génération DataMatrix
+                dm = encode(numero_emballage.encode('utf-8'))
+            
+                # Recomposer une image PIL à partir des pixels bruts
+                img = Image.frombytes('RGB', (dm.width, dm.height), dm.pixels)
+            
+                # Convertir en PNG pour openpyxl
+                bio = io.BytesIO()
+                img.save(bio, format="PNG")
+                bio.seek(0)
+            
+                img_excel = OpenpyxlImage(bio)
+                img_excel.anchor = "D1"
+                ws_recap.add_image(img_excel)
+            except Exception as e:
+                print("Erreur génération DataMatrix:", e)
+            """
             # Ajouter feuille Détails
             ws_details = wb.create_sheet(title="Détails")
             # écrire le details_df avec headers
@@ -903,17 +980,21 @@ class StockApp(ThemedTk):
         
         if reponse==True:
             conn=self.db_manager.connect()
+            visa=self.db_manager.user
             cursor=conn.cursor()
             for batt_emb in emb_batts:
+                
+                cursor.execute("Update produit_voltr set statut= %s where numero_serie_produit=%s",("embalee",batt_emb))
+                
                 if self.check_var.get()==True:
-                    query="Update suivi_production set emballage=1, date_emballage=NOW() where numero_serie_batterie= %s"
-                    param=(batt_emb,)
+                    query="Update suivi_production set emballage=1, date_emballage=NOW(), visa_emballage= %s where numero_serie_batterie= %s"
+                    param=(visa,batt_emb)
                     cursor.execute(query,param)
                     
                 else :
                     num_emb=self.entry.get()
-                    query="Update suivi_production set emballage=1,date_emballage=NOW(),num_emballage=%s where numero_serie_batterie= %s"
-                    param=(num_emb,batt_emb)
+                    query="Update suivi_production set emballage=1,date_emballage=NOW(),num_emballage=%s, visa_emballage=%s where numero_serie_batterie= %s"
+                    param=(num_emb,visa,batt_emb)
 
                     cursor.execute(query,param)
             
@@ -934,6 +1015,10 @@ class StockApp(ThemedTk):
             
             for item in self.emb_tree_f.get_children():
                 self.emb_tree_f.delete(item)
+            
+            self.emb_listbox_batt.delete(0, tk.END)
+            self.emb_on_select_ref(self)
+
         
     def emballer_batterie(self):
         
@@ -1349,7 +1434,7 @@ class StockApp(ThemedTk):
         self.ex_ref_combo.bind("<<ComboboxSelected>>", self.ex_on_select_ref)
     
         #ttk.Button(left, text="❌ Non conforme", command=self.add_non_conf_batterie, style="Danger.TButton").pack(pady=6, anchor="w")
-    
+        """
         # Client
         ttk.Label(left, text="Client").pack(pady=(8,4), anchor="w")
         cb_var_client = tk.StringVar()
@@ -1376,7 +1461,7 @@ class StockApp(ThemedTk):
         self.cb_pr = ttk.Combobox(left, state="readonly", width=40)
         self.cb_pr.pack(fill="x")
         
-        # Alimentation des clients
+        # Alimentation des projets
         conn = self.db_manager.connect()
         if conn:
             try:
@@ -1390,7 +1475,92 @@ class StockApp(ThemedTk):
                 try: cursor.close()
                 except: pass
                 conn.close()
-    
+        """
+        
+        # Client
+        ttk.Label(left, text="Client").pack(pady=(8,4), anchor="w")
+        self.client_var = tk.StringVar()
+        self.client_entry = ttk.Entry(left, textvariable=self.client_var, width=40)
+        self.client_entry.pack(fill="x")
+        self.client_listbox = tk.Listbox(left, height=6)
+        self.client_listbox.pack_forget()  # cachée au départ
+        
+        # Charger les clients depuis la DB
+        conn = self.db_manager.connect()
+        self.client_values = []
+        if conn:
+            try:
+                cursor = conn.cursor()
+                cursor.execute("SELECT nom_client FROM client ORDER BY nom_client")
+                self.client_values = [row[0] for row in cursor.fetchall()]
+            finally:
+                try: cursor.close()
+                except: pass
+                conn.close()
+        
+        # Fonction simple pour filtrer et afficher
+        def update_client_listbox(event):
+            text = self.client_var.get().lower()
+            matches = [c for c in self.client_values if text in c.lower()]
+            if matches:
+                self.client_listbox.delete(0, tk.END)
+                for m in matches:
+                    self.client_listbox.insert(tk.END, m)
+                self.client_listbox.pack(fill="x")
+            else:
+                self.client_listbox.pack_forget()
+        
+        def select_client(event):
+            sel = self.client_listbox.curselection()
+            if sel:
+                self.client_var.set(self.client_listbox.get(sel[0]))
+            self.client_listbox.pack_forget()
+        
+        self.client_entry.bind("<KeyRelease>", update_client_listbox)
+        self.client_listbox.bind("<ButtonRelease-1>", select_client)
+        
+        # Même chose pour le Projet
+        ttk.Label(left, text="Projet").pack(pady=(8,4), anchor="w")
+        self.project_var = tk.StringVar()
+        self.project_entry = ttk.Entry(left, textvariable=self.project_var, width=40)
+        self.project_entry.pack(fill="x")
+        self.project_listbox = tk.Listbox(left, height=6)
+        self.project_listbox.pack_forget()
+        
+        # Charger les projets
+        conn = self.db_manager.connect()
+        self.project_values = []
+        if conn:
+            try:
+                cursor = conn.cursor()
+                cursor.execute("SELECT nom_projet FROM projet ORDER BY nom_projet")
+                self.project_values = [row[0] for row in cursor.fetchall()]
+            finally:
+                try: cursor.close()
+                except: pass
+                conn.close()
+        
+        def update_project_listbox(event):
+            text = self.project_var.get().lower()
+            matches = [p for p in self.project_values if text in p.lower()]
+            if matches:
+                self.project_listbox.delete(0, tk.END)
+                for m in matches:
+                    self.project_listbox.insert(tk.END, m)
+                self.project_listbox.pack(fill="x")
+            else:
+                self.project_listbox.pack_forget()
+        
+        def select_project(event):
+            sel = self.project_listbox.curselection()
+            if sel:
+                self.project_var.set(self.project_listbox.get(sel[0]))
+            self.project_listbox.pack_forget()
+        
+        self.project_entry.bind("<KeyRelease>", update_project_listbox)
+        self.project_listbox.bind("<ButtonRelease-1>", select_project)
+        
+        
         # Commentaire
         ttk.Label(left, text="Commentaire").pack(pady=(8,4), anchor="w")
         self.exp_comm_entry = ttk.Entry(left)
@@ -1409,6 +1579,13 @@ class StockApp(ThemedTk):
         self.exp_listbox_batt.grid(row=1, column=0, sticky="nsew")
         self.exp_listbox_batt.bind("<<ListboxSelect>>", lambda e: None)  # neutre
         self.exp_listbox_batt.bind("<Double-Button-1>", self._exp_on_available_double_click)
+        
+        # scrollbar verticale avec grid (ttk.Scrollbar possible)
+        scrollbar = tk.Scrollbar(right, orient="vertical", command=self.exp_listbox_batt.yview)
+        scrollbar.grid(row=1, column=1, sticky="ns")
+        
+        # lien listbox <-> scrollbar
+        self.exp_listbox_batt.config(yscrollcommand=scrollbar.set)
     
         ttk.Separator(right, orient="horizontal").grid(row=2, column=0, sticky="ew", pady=10)
     
@@ -1470,7 +1647,7 @@ class StockApp(ThemedTk):
                 query="select numero_serie_batterie where emballage = 1 and (expedition = 0 or expedition is null) and sp.recyclage is null "
                 cursor.execute(query)        
             else :
-                query="Select pv.numero_serie_produit from produit_voltr as pv join suivi_production as sp on pv.numero_serie_produit=sp.numero_serie_batterie where pv.reference_produit_voltr =%s and (sp.expedition = 0 or sp.expedition is null) and sp.recyclage is null"
+                query="Select pv.numero_serie_produit from produit_voltr as pv join suivi_production as sp on pv.numero_serie_produit=sp.numero_serie_batterie where pv.reference_produit_voltr =%s and sp.emballage=1 and (sp.expedition = 0 or sp.expedition is null) and sp.recyclage is null"
                 param=(ref,)
                 cursor.execute(query,param)
             
@@ -1774,6 +1951,7 @@ class StockApp(ThemedTk):
             # 6) Mettre à jour le suivi_production
             query_sp = "UPDATE suivi_production SET recyclage = 1, date_recyclage = NOW() WHERE numero_serie_batterie = %s"
             cursor.execute(query_sp, (numero_serie_batt,))
+            cursor.execute("Update produit_voltr set statut=%s where numero_serie_produit=%s",("recyclee",numero_serie_batt))
     
             # 7) Commit et message utilisateur
             conn.commit()
@@ -1910,6 +2088,7 @@ class StockApp(ThemedTk):
         # 0) Récup sélection
         #numeros = list(self.send_listbox_batt.get(0, tk.END))
         numeros=[self.send_listbox_batt.item(item)['values'][0] for item in self.send_listbox_batt.get_children()]
+        list_emballage=list(set([self.send_listbox_batt.item(item)['values'][1] for item in self.send_listbox_batt.get_children()]))
         if not numeros:
             messagebox.showwarning("Avertissement", "Aucune batterie sélectionnée.")
             return
@@ -1921,26 +2100,11 @@ class StockApp(ThemedTk):
             return
         try:
             cur = conn.cursor()
-        
             
             comment = self.exp_comm_entry.get().strip()
             placeholders_final = ", ".join(["%s"] * len(numeros))
-            projet=self.cb_pr.get().strip()
-            nom_client=self.cb_cl.get().strip()
-            
-            conn2 = self.db_manager.connect()
-            if conn2:
-                try:
-                    cursor = conn2.cursor()
-                    cursor.execute("SELECT nom_client FROM client ORDER BY nom_client")
-                    mots = [row[0].replace(" ", "-") for row in cursor.fetchall()]
-                    self.cb_cl["values"] = mots
-                except Exception as e:
-                    messagebox.showerror("Erreur SQL", f"Chargement clients :\n{e}")
-                finally:
-                    try: cursor.close()
-                    except: pass
-                    conn2.close()
+            projet=self.project_entry.get()
+            nom_client=self.client_entry.get()
             
             #Obtenir id_client
             if nom_client:
@@ -1995,7 +2159,7 @@ class StockApp(ThemedTk):
             
             sql_mark = f"""
                 UPDATE produit_voltr
-                SET {', '.join(set_parts)}
+                SET {', '.join(set_parts)}, date_expedition=NOW()
                 WHERE numero_serie_produit IN ({placeholders_final})
             """
             
@@ -2011,6 +2175,25 @@ class StockApp(ThemedTk):
             self._exp_update_counter()                      # remet le compteur à jour          # recharge les "disponibles"
             self.exp_comm_entry.delete(0, tk.END)           # vide le commentaire
             
+            mode=self.ex_mode_combo.get()
+            if mode == "Numero emballage":
+                folder_path =r"G:\Drive partagés\VoltR\4_Production\8_Picking\Suivi_prod_emballage"
+                
+                files_to_delete =list_emballage
+                # Parcours des fichiers du dossier
+                deleted_files = []
+                for file_name in os.listdir(folder_path):
+                    # Vérifie si le fichier est un Excel et que son nom sans extension est dans la liste
+                    if file_name.endswith(".xlsx") and os.path.splitext(file_name)[0] in files_to_delete:
+                        file_path = os.path.join(folder_path, file_name)
+                        os.remove(file_path)
+                        deleted_files.append(file_name)
+                
+                if deleted_files:
+                    messagebox.showinfo("Suppression terminée", "Fichiers supprimés :\n" + "\n".join(deleted_files))
+                else:
+                    messagebox.showinfo("Suppression terminée", "Aucun fichier supprimé.")
+                    
 
         except Exception as e:
             try:

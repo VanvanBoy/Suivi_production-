@@ -24,7 +24,6 @@ imports:
  &#8226;   <a href="#_collections_abc">_collections_abc</a>
  &#8226;   <a href="#_weakrefset">_weakrefset</a>
  &#8226;   <a href="#abc">abc</a>
- &#8226;   <a href="#babel.numbers">babel.numbers</a>
  &#8226;   <a href="#codecs">codecs</a>
  &#8226;   <a href="#collections">collections</a>
  &#8226;   <a href="#collections.abc">collections.abc</a>
@@ -199,6 +198,7 @@ imports:
  &#8226;   <a href="#tkcalendar">tkcalendar</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.messagebox">tkinter.messagebox</a>
+ &#8226;   <a href="#tkinter.simpledialog">tkinter.simpledialog</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
  &#8226;   <a href="#token">token</a>
  &#8226;   <a href="#tokenize">tokenize</a>
@@ -783,12 +783,16 @@ imports:
  &#8226;   <a href="#PIL.ImageChops">PIL.ImageChops</a>
  &#8226;   <a href="#PIL.ImageCms">PIL.ImageCms</a>
  &#8226;   <a href="#PIL.ImageColor">PIL.ImageColor</a>
+ &#8226;   <a href="#PIL.ImageDraw">PIL.ImageDraw</a>
+ &#8226;   <a href="#PIL.ImageDraw2">PIL.ImageDraw2</a>
  &#8226;   <a href="#PIL.ImageEnhance">PIL.ImageEnhance</a>
  &#8226;   <a href="#PIL.ImageFile">PIL.ImageFile</a>
  &#8226;   <a href="#PIL.ImageFilter">PIL.ImageFilter</a>
+ &#8226;   <a href="#PIL.ImageFont">PIL.ImageFont</a>
  &#8226;   <a href="#PIL.ImageMode">PIL.ImageMode</a>
  &#8226;   <a href="#PIL.ImageOps">PIL.ImageOps</a>
  &#8226;   <a href="#PIL.ImagePalette">PIL.ImagePalette</a>
+ &#8226;   <a href="#PIL.ImagePath">PIL.ImagePath</a>
  &#8226;   <a href="#PIL.ImageQt">PIL.ImageQt</a>
  &#8226;   <a href="#PIL.ImageSequence">PIL.ImageSequence</a>
  &#8226;   <a href="#PIL.ImageShow">PIL.ImageShow</a>
@@ -805,7 +809,9 @@ imports:
  &#8226;   <a href="#PIL.TiffImagePlugin">PIL.TiffImagePlugin</a>
  &#8226;   <a href="#PIL.TiffTags">PIL.TiffTags</a>
  &#8226;   <a href="#PIL._imaging">PIL._imaging</a>
+ &#8226;   <a href="#PIL._imagingagg">PIL._imagingagg</a>
  &#8226;   <a href="#PIL._imagingcms">PIL._imagingcms</a>
+ &#8226;   <a href="#PIL._imagingft">PIL._imagingft</a>
  &#8226;   <a href="#PIL._imagingtk">PIL._imagingtk</a>
  &#8226;   <a href="#PIL._version">PIL._version</a>
  &#8226;   <a href="#PIL._webp">PIL._webp</a>
@@ -840,12 +846,16 @@ imported by:
  &#8226;   <a href="#PIL.ImageChops">PIL.ImageChops</a>
  &#8226;   <a href="#PIL.ImageCms">PIL.ImageCms</a>
  &#8226;   <a href="#PIL.ImageColor">PIL.ImageColor</a>
+ &#8226;   <a href="#PIL.ImageDraw">PIL.ImageDraw</a>
+ &#8226;   <a href="#PIL.ImageDraw2">PIL.ImageDraw2</a>
  &#8226;   <a href="#PIL.ImageEnhance">PIL.ImageEnhance</a>
  &#8226;   <a href="#PIL.ImageFile">PIL.ImageFile</a>
  &#8226;   <a href="#PIL.ImageFilter">PIL.ImageFilter</a>
+ &#8226;   <a href="#PIL.ImageFont">PIL.ImageFont</a>
  &#8226;   <a href="#PIL.ImageMode">PIL.ImageMode</a>
  &#8226;   <a href="#PIL.ImageOps">PIL.ImageOps</a>
  &#8226;   <a href="#PIL.ImagePalette">PIL.ImagePalette</a>
+ &#8226;   <a href="#PIL.ImagePath">PIL.ImagePath</a>
  &#8226;   <a href="#PIL.ImageQt">PIL.ImageQt</a>
  &#8226;   <a href="#PIL.ImageSequence">PIL.ImageSequence</a>
  &#8226;   <a href="#PIL.ImageShow">PIL.ImageShow</a>
@@ -889,6 +899,7 @@ imported by:
  &#8226;   <a href="#PIL._deprecate">PIL._deprecate</a>
  &#8226;   <a href="#PIL._imaging">PIL._imaging</a>
  &#8226;   <a href="#PIL._imagingcms">PIL._imagingcms</a>
+ &#8226;   <a href="#PIL._imagingft">PIL._imagingft</a>
  &#8226;   <a href="#PIL._imagingtk">PIL._imagingtk</a>
  &#8226;   <a href="#PIL._util">PIL._util</a>
  &#8226;   <a href="#PIL._version">PIL._version</a>
@@ -899,6 +910,10 @@ imported by:
  &#8226;   <a href="#matplotlib.backends.backend_webagg_core">matplotlib.backends.backend_webagg_core</a>
  &#8226;   <a href="#matplotlib.colors">matplotlib.colors</a>
  &#8226;   <a href="#openpyxl.drawing.image">openpyxl.drawing.image</a>
+ &#8226;   <a href="#qrcode.image.pil">qrcode.image.pil</a>
+ &#8226;   <a href="#qrcode.image.styledpil">qrcode.image.styledpil</a>
+ &#8226;   <a href="#qrcode.image.styles.colormasks">qrcode.image.styles.colormasks</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.pil">qrcode.image.styles.moduledrawers.pil</a>
  &#8226;   <a href="#ttkthemes._widget">ttkthemes._widget</a>
 
   </div>
@@ -1459,10 +1474,14 @@ imported by:
  &#8226;   <a href="#PIL.ImageChops">PIL.ImageChops</a>
  &#8226;   <a href="#PIL.ImageCms">PIL.ImageCms</a>
  &#8226;   <a href="#PIL.ImageColor">PIL.ImageColor</a>
+ &#8226;   <a href="#PIL.ImageDraw">PIL.ImageDraw</a>
+ &#8226;   <a href="#PIL.ImageDraw2">PIL.ImageDraw2</a>
  &#8226;   <a href="#PIL.ImageEnhance">PIL.ImageEnhance</a>
  &#8226;   <a href="#PIL.ImageFile">PIL.ImageFile</a>
  &#8226;   <a href="#PIL.ImageFilter">PIL.ImageFilter</a>
+ &#8226;   <a href="#PIL.ImageFont">PIL.ImageFont</a>
  &#8226;   <a href="#PIL.ImageOps">PIL.ImageOps</a>
+ &#8226;   <a href="#PIL.ImagePath">PIL.ImagePath</a>
  &#8226;   <a href="#PIL.ImageQt">PIL.ImageQt</a>
  &#8226;   <a href="#PIL.ImageShow">PIL.ImageShow</a>
  &#8226;   <a href="#PIL.ImageTk">PIL.ImageTk</a>
@@ -1501,6 +1520,10 @@ imported by:
  &#8226;   <a href="#matplotlib.backends.backend_webagg_core">matplotlib.backends.backend_webagg_core</a>
  &#8226;   <a href="#matplotlib.colors">matplotlib.colors</a>
  &#8226;   <a href="#openpyxl.drawing.image">openpyxl.drawing.image</a>
+ &#8226;   <a href="#qrcode.image.pil">qrcode.image.pil</a>
+ &#8226;   <a href="#qrcode.image.styledpil">qrcode.image.styledpil</a>
+ &#8226;   <a href="#qrcode.image.styles.colormasks">qrcode.image.styles.colormasks</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.pil">qrcode.image.styles.moduledrawers.pil</a>
  &#8226;   <a href="#ttkthemes._widget">ttkthemes._widget</a>
 
   </div>
@@ -1564,8 +1587,58 @@ imports:
 imported by:
     <a href="#PIL">PIL</a>
  &#8226;   <a href="#PIL.Image">PIL.Image</a>
+ &#8226;   <a href="#PIL.ImageDraw">PIL.ImageDraw</a>
+ &#8226;   <a href="#PIL.ImageDraw2">PIL.ImageDraw2</a>
  &#8226;   <a href="#PIL.ImageOps">PIL.ImageOps</a>
  &#8226;   <a href="#PIL.ImagePalette">PIL.ImagePalette</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="PIL.ImageDraw"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/PIL/ImageDraw.py" type="text/plain"><tt>PIL.ImageDraw</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.Image">PIL.Image</a>
+ &#8226;   <a href="#PIL.ImageColor">PIL.ImageColor</a>
+ &#8226;   <a href="#PIL.ImageDraw2">PIL.ImageDraw2</a>
+ &#8226;   <a href="#PIL.ImageFont">PIL.ImageFont</a>
+ &#8226;   <a href="#PIL._imagingagg">PIL._imagingagg</a>
+ &#8226;   <a href="#math">math</a>
+ &#8226;   <a href="#numbers">numbers</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.ImageDraw2">PIL.ImageDraw2</a>
+ &#8226;   <a href="#qrcode.image.pil">qrcode.image.pil</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.pil">qrcode.image.styles.moduledrawers.pil</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="PIL.ImageDraw2"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/PIL/ImageDraw2.py" type="text/plain"><tt>PIL.ImageDraw2</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.Image">PIL.Image</a>
+ &#8226;   <a href="#PIL.ImageColor">PIL.ImageColor</a>
+ &#8226;   <a href="#PIL.ImageDraw">PIL.ImageDraw</a>
+ &#8226;   <a href="#PIL.ImageFont">PIL.ImageFont</a>
+ &#8226;   <a href="#PIL.ImagePath">PIL.ImagePath</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.ImageDraw">PIL.ImageDraw</a>
 
   </div>
 
@@ -1678,6 +1751,33 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="PIL.ImageFont"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/PIL/ImageFont.py" type="text/plain"><tt>PIL.ImageFont</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.Image">PIL.Image</a>
+ &#8226;   <a href="#PIL._imagingft">PIL._imagingft</a>
+ &#8226;   <a href="#PIL._util">PIL._util</a>
+ &#8226;   <a href="#base64">base64</a>
+ &#8226;   <a href="#enum">enum</a>
+ &#8226;   <a href="#io">io</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#warnings">warnings</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.ImageDraw">PIL.ImageDraw</a>
+ &#8226;   <a href="#PIL.ImageDraw2">PIL.ImageDraw2</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="PIL.ImageMode"></a>
   <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/PIL/ImageMode.py" type="text/plain"><tt>PIL.ImageMode</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -1750,6 +1850,24 @@ imported by:
  &#8226;   <a href="#PIL.TiffImagePlugin">PIL.TiffImagePlugin</a>
  &#8226;   <a href="#PIL.XVThumbImagePlugin">PIL.XVThumbImagePlugin</a>
  &#8226;   <a href="#PIL.XpmImagePlugin">PIL.XpmImagePlugin</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="PIL.ImagePath"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/PIL/ImagePath.py" type="text/plain"><tt>PIL.ImagePath</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.Image">PIL.Image</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.ImageDraw2">PIL.ImageDraw2</a>
 
   </div>
 
@@ -2692,6 +2810,18 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="PIL._imagingagg"></a>
+  <a target="code" href="" type="text/plain"><tt>PIL._imagingagg</tt></a>
+<span class="moduletype">MissingModule</span>  <div class="import">
+imported by:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.ImageDraw">PIL.ImageDraw</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="PIL._imagingcms"></a>
   <tt>PIL._imagingcms</tt> <span class="moduletype"><tt>C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\site-packages\PIL\_imagingcms.cp311-win_amd64.pyd</tt></span>  <div class="import">
 imports:
@@ -2702,6 +2832,22 @@ imports:
 imported by:
     <a href="#PIL">PIL</a>
  &#8226;   <a href="#PIL.ImageCms">PIL.ImageCms</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="PIL._imagingft"></a>
+  <tt>PIL._imagingft</tt> <span class="moduletype"><tt>C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\site-packages\PIL\_imagingft.cp311-win_amd64.pyd</tt></span>  <div class="import">
+imports:
+    <a href="#PIL">PIL</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.ImageFont">PIL.ImageFont</a>
 
   </div>
 
@@ -2738,6 +2884,7 @@ imported by:
     <a href="#PIL.Image">PIL.Image</a>
  &#8226;   <a href="#PIL.ImageCms">PIL.ImageCms</a>
  &#8226;   <a href="#PIL.ImageFile">PIL.ImageFile</a>
+ &#8226;   <a href="#PIL.ImageFont">PIL.ImageFont</a>
  &#8226;   <a href="#PIL.ImageQt">PIL.ImageQt</a>
  &#8226;   <a href="#PIL.PyAccess">PIL.PyAccess</a>
 
@@ -2877,7 +3024,6 @@ imported by:
  &#8226;   <a href="#babel.dates">babel.dates</a>
  &#8226;   <a href="#babel.localedata">babel.localedata</a>
  &#8226;   <a href="#babel.localtime._win32">babel.localtime._win32</a>
- &#8226;   <a href="#babel.numbers">babel.numbers</a>
  &#8226;   <a href="#babel.plural">babel.plural</a>
  &#8226;   <a href="#codeop">codeop</a>
  &#8226;   <a href="#contourpy">contourpy</a>
@@ -4360,6 +4506,8 @@ imported by:
  &#8226;   <a href="#pkg_resources._vendor.packaging.specifiers">pkg_resources._vendor.packaging.specifiers</a>
  &#8226;   <a href="#pkg_resources._vendor.pyparsing.core">pkg_resources._vendor.pyparsing.core</a>
  &#8226;   <a href="#pyparsing.core">pyparsing.core</a>
+ &#8226;   <a href="#qrcode.image.base">qrcode.image.base</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.base">qrcode.image.styles.moduledrawers.base</a>
  &#8226;   <a href="#selectors">selectors</a>
  &#8226;   <a href="#tornado.websocket">tornado.websocket</a>
  &#8226;   <a href="#typing">typing</a>
@@ -5452,7 +5600,6 @@ imported by:
  &#8226;   <a href="#babel.dates">babel.dates</a>
  &#8226;   <a href="#babel.localedata">babel.localedata</a>
  &#8226;   <a href="#babel.localtime">babel.localtime</a>
- &#8226;   <a href="#babel.numbers">babel.numbers</a>
  &#8226;   <a href="#babel.plural">babel.plural</a>
  &#8226;   <a href="#tkcalendar.calendar_">tkcalendar.calendar_</a>
 
@@ -5482,7 +5629,6 @@ imported by:
  &#8226;   <a href="#babel.dates">babel.dates</a>
  &#8226;   <a href="#babel.localedata">babel.localedata</a>
  &#8226;   <a href="#babel.localtime._win32">babel.localtime._win32</a>
- &#8226;   <a href="#babel.numbers">babel.numbers</a>
 
   </div>
 
@@ -5543,7 +5689,6 @@ imported by:
     <a href="#babel">babel</a>
  &#8226;   <a href="#babel.core">babel.core</a>
  &#8226;   <a href="#babel.dates">babel.dates</a>
- &#8226;   <a href="#babel.numbers">babel.numbers</a>
 
   </div>
 
@@ -5655,31 +5800,6 @@ imported by:
 </div>
 
 <div class="node">
-  <a name="babel.numbers"></a>
-  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/babel-2.12.1-py3.11.egg/babel/numbers.py" type="text/plain"><tt>babel.numbers</tt></a>
-<span class="moduletype">SourceModule</span>  <div class="import">
-imports:
-    <a href="#__future__">__future__</a>
- &#8226;   <a href="#babel">babel</a>
- &#8226;   <a href="#babel.core">babel.core</a>
- &#8226;   <a href="#babel.localedata">babel.localedata</a>
- &#8226;   <a href="#datetime">datetime</a>
- &#8226;   <a href="#decimal">decimal</a>
- &#8226;   <a href="#re">re</a>
- &#8226;   <a href="#typing">typing</a>
- &#8226;   <a href="#typing_extensions">typing_extensions</a>
- &#8226;   <a href="#warnings">warnings</a>
-
-  </div>
-  <div class="import">
-imported by:
-    <a href="#SP_emb+exp_beta.py">SP_emb+exp_beta.py</a>
-
-  </div>
-
-</div>
-
-<div class="node">
   <a name="babel.plural"></a>
   <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/babel-2.12.1-py3.11.egg/babel/plural.py" type="text/plain"><tt>babel.plural</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
@@ -5715,7 +5835,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#email._encoded_words">email._encoded_words</a>
+    <a href="#PIL.ImageFont">PIL.ImageFont</a>
+ &#8226;   <a href="#email._encoded_words">email._encoded_words</a>
  &#8226;   <a href="#email.base64mime">email.base64mime</a>
  &#8226;   <a href="#email.encoders">email.encoders</a>
  &#8226;   <a href="#encodings.base64_codec">encodings.base64_codec</a>
@@ -5797,6 +5918,7 @@ imported by:
  &#8226;   <a href="#mysql.connector.fabric.caching">mysql.connector.fabric.caching</a>
  &#8226;   <a href="#mysql.connector.fabric.connection">mysql.connector.fabric.connection</a>
  &#8226;   <a href="#pytz.tzinfo">pytz.tzinfo</a>
+ &#8226;   <a href="#qrcode.main">qrcode.main</a>
  &#8226;   <a href="#random">random</a>
  &#8226;   <a href="#statistics">statistics</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
@@ -7267,7 +7389,6 @@ imported by:
  &#8226;   <a href="#babel.localtime._fallback">babel.localtime._fallback</a>
  &#8226;   <a href="#babel.localtime._unix">babel.localtime._unix</a>
  &#8226;   <a href="#babel.localtime._win32">babel.localtime._win32</a>
- &#8226;   <a href="#babel.numbers">babel.numbers</a>
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#dateutil.easter">dateutil.easter</a>
  &#8226;   <a href="#dateutil.parser._parser">dateutil.parser._parser</a>
@@ -7767,8 +7888,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#babel.numbers">babel.numbers</a>
- &#8226;   <a href="#babel.plural">babel.plural</a>
+    <a href="#babel.plural">babel.plural</a>
  &#8226;   <a href="#dateutil.parser._parser">dateutil.parser._parser</a>
  &#8226;   <a href="#fractions">fractions</a>
  &#8226;   <a href="#matplotlib.units">matplotlib.units</a>
@@ -10888,6 +11008,7 @@ imported by:
  &#8226;   <a href="#PIL.GifImagePlugin">PIL.GifImagePlugin</a>
  &#8226;   <a href="#PIL.Image">PIL.Image</a>
  &#8226;   <a href="#PIL.ImageCms">PIL.ImageCms</a>
+ &#8226;   <a href="#PIL.ImageFont">PIL.ImageFont</a>
  &#8226;   <a href="#PIL.PngImagePlugin">PIL.PngImagePlugin</a>
  &#8226;   <a href="#SP_emb+exp_beta.py">SP_emb+exp_beta.py</a>
  &#8226;   <a href="#ast">ast</a>
@@ -12468,6 +12589,7 @@ imported by:
  &#8226;   <a href="#PIL.IcoImagePlugin">PIL.IcoImagePlugin</a>
  &#8226;   <a href="#PIL.Image">PIL.Image</a>
  &#8226;   <a href="#PIL.ImageFile">PIL.ImageFile</a>
+ &#8226;   <a href="#PIL.ImageFont">PIL.ImageFont</a>
  &#8226;   <a href="#PIL.ImageQt">PIL.ImageQt</a>
  &#8226;   <a href="#PIL.ImageTk">PIL.ImageTk</a>
  &#8226;   <a href="#PIL.IptcImagePlugin">PIL.IptcImagePlugin</a>
@@ -12705,6 +12827,7 @@ imported by:
  &#8226;   <a href="#plistlib">plistlib</a>
  &#8226;   <a href="#pyparsing.unicode">pyparsing.unicode</a>
  &#8226;   <a href="#pyparsing.util">pyparsing.util</a>
+ &#8226;   <a href="#qrcode.image.pure">qrcode.image.pure</a>
  &#8226;   <a href="#random">random</a>
  &#8226;   <a href="#reprlib">reprlib</a>
  &#8226;   <a href="#six">six</a>
@@ -13151,6 +13274,7 @@ imported by:
  &#8226;   <a href="#PIL.GimpGradientFile">PIL.GimpGradientFile</a>
  &#8226;   <a href="#PIL.IcoImagePlugin">PIL.IcoImagePlugin</a>
  &#8226;   <a href="#PIL.Image">PIL.Image</a>
+ &#8226;   <a href="#PIL.ImageDraw">PIL.ImageDraw</a>
  &#8226;   <a href="#PIL.ImageStat">PIL.ImageStat</a>
  &#8226;   <a href="#PIL.JpegImagePlugin">PIL.JpegImagePlugin</a>
  &#8226;   <a href="#PIL.PdfImagePlugin">PIL.PdfImagePlugin</a>
@@ -13191,6 +13315,8 @@ imported by:
  &#8226;   <a href="#pandas.io.formats.format">pandas.io.formats.format</a>
  &#8226;   <a href="#pandas.plotting._matplotlib.tools">pandas.plotting._matplotlib.tools</a>
  &#8226;   <a href="#pkg_resources._vendor.more_itertools.more">pkg_resources._vendor.more_itertools.more</a>
+ &#8226;   <a href="#qrcode.image.styles.colormasks">qrcode.image.styles.colormasks</a>
+ &#8226;   <a href="#qrcode.util">qrcode.util</a>
  &#8226;   <a href="#random">random</a>
  &#8226;   <a href="#selectors">selectors</a>
  &#8226;   <a href="#statistics">statistics</a>
@@ -18290,7 +18416,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#PIL.TiffImagePlugin">PIL.TiffImagePlugin</a>
+    <a href="#PIL.ImageDraw">PIL.ImageDraw</a>
+ &#8226;   <a href="#PIL.TiffImagePlugin">PIL.TiffImagePlugin</a>
  &#8226;   <a href="#_pydecimal">_pydecimal</a>
  &#8226;   <a href="#fractions">fractions</a>
  &#8226;   <a href="#matplotlib.artist">matplotlib.artist</a>
@@ -28454,6 +28581,7 @@ imported by:
  &#8226;   <a href="#PIL.IcnsImagePlugin">PIL.IcnsImagePlugin</a>
  &#8226;   <a href="#PIL.ImImagePlugin">PIL.ImImagePlugin</a>
  &#8226;   <a href="#PIL.Image">PIL.Image</a>
+ &#8226;   <a href="#PIL.ImageFont">PIL.ImageFont</a>
  &#8226;   <a href="#PIL.ImageShow">PIL.ImageShow</a>
  &#8226;   <a href="#PIL.IptcImagePlugin">PIL.IptcImagePlugin</a>
  &#8226;   <a href="#PIL.Jpeg2KImagePlugin">PIL.Jpeg2KImagePlugin</a>
@@ -42422,6 +42550,17 @@ imported by:
 </div>
 
 <div class="node">
+  <a name="png"></a>
+  <a target="code" href="" type="text/plain"><tt>png</tt></a>
+<span class="moduletype">MissingModule</span>  <div class="import">
+imported by:
+    <a href="#qrcode.compat.png">qrcode.compat.png</a>
+
+  </div>
+
+</div>
+
+<div class="node">
   <a name="posix"></a>
   <a target="code" href="" type="text/plain"><tt>posix</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
@@ -43452,10 +43591,389 @@ imported by:
 
 <div class="node">
   <a name="qrcode"></a>
-  <a target="code" href="" type="text/plain"><tt>qrcode</tt></a>
-<span class="moduletype">MissingModule</span>  <div class="import">
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/__init__.py" type="text/plain"><tt>qrcode</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.LUT">qrcode.LUT</a>
+ &#8226;   <a href="#qrcode.base">qrcode.base</a>
+ &#8226;   <a href="#qrcode.constants">qrcode.constants</a>
+ &#8226;   <a href="#qrcode.exceptions">qrcode.exceptions</a>
+ &#8226;   <a href="#qrcode.image">qrcode.image</a>
+ &#8226;   <a href="#qrcode.main">qrcode.main</a>
+ &#8226;   <a href="#qrcode.util">qrcode.util</a>
+ &#8226;   <a href="#sys">sys</a>
+
+  </div>
+  <div class="import">
 imported by:
     <a href="#SP_emb+exp_beta.py">SP_emb+exp_beta.py</a>
+ &#8226;   <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.LUT">qrcode.LUT</a>
+ &#8226;   <a href="#qrcode.base">qrcode.base</a>
+ &#8226;   <a href="#qrcode.compat">qrcode.compat</a>
+ &#8226;   <a href="#qrcode.constants">qrcode.constants</a>
+ &#8226;   <a href="#qrcode.exceptions">qrcode.exceptions</a>
+ &#8226;   <a href="#qrcode.image">qrcode.image</a>
+ &#8226;   <a href="#qrcode.main">qrcode.main</a>
+ &#8226;   <a href="#qrcode.util">qrcode.util</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.LUT"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/LUT.py" type="text/plain"><tt>qrcode.LUT</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#qrcode">qrcode</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.util">qrcode.util</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.base"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/base.py" type="text/plain"><tt>qrcode.base</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.constants">qrcode.constants</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.util">qrcode.util</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.compat"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/compat/__init__.py" type="text/plain"><tt>qrcode.compat</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#qrcode">qrcode</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode.compat.png">qrcode.compat.png</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.compat.png"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/compat/png.py" type="text/plain"><tt>qrcode.compat.png</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#png">png</a>
+ &#8226;   <a href="#qrcode.compat">qrcode.compat</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode.image.pure">qrcode.image.pure</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.constants"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/constants.py" type="text/plain"><tt>qrcode.constants</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#qrcode">qrcode</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.base">qrcode.base</a>
+ &#8226;   <a href="#qrcode.main">qrcode.main</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.exceptions"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/exceptions.py" type="text/plain"><tt>qrcode.exceptions</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#qrcode">qrcode</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.main">qrcode.main</a>
+ &#8226;   <a href="#qrcode.util">qrcode.util</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.image"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/image/__init__.py" type="text/plain"><tt>qrcode.image</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#qrcode">qrcode</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.image.base">qrcode.image.base</a>
+ &#8226;   <a href="#qrcode.image.pil">qrcode.image.pil</a>
+ &#8226;   <a href="#qrcode.image.pure">qrcode.image.pure</a>
+ &#8226;   <a href="#qrcode.image.styledpil">qrcode.image.styledpil</a>
+ &#8226;   <a href="#qrcode.image.styles">qrcode.image.styles</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.image.base"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/image/base.py" type="text/plain"><tt>qrcode.image.base</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#abc">abc</a>
+ &#8226;   <a href="#qrcode.image">qrcode.image</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.base">qrcode.image.styles.moduledrawers.base</a>
+ &#8226;   <a href="#qrcode.main">qrcode.main</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode.image.pil">qrcode.image.pil</a>
+ &#8226;   <a href="#qrcode.image.pure">qrcode.image.pure</a>
+ &#8226;   <a href="#qrcode.image.styledpil">qrcode.image.styledpil</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.base">qrcode.image.styles.moduledrawers.base</a>
+ &#8226;   <a href="#qrcode.main">qrcode.main</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.image.pil"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/image/pil.py" type="text/plain"><tt>qrcode.image.pil</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.Image">PIL.Image</a>
+ &#8226;   <a href="#PIL.ImageDraw">PIL.ImageDraw</a>
+ &#8226;   <a href="#qrcode.image">qrcode.image</a>
+ &#8226;   <a href="#qrcode.image.base">qrcode.image.base</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode.main">qrcode.main</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.image.pure"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/image/pure.py" type="text/plain"><tt>qrcode.image.pure</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#itertools">itertools</a>
+ &#8226;   <a href="#qrcode.compat.png">qrcode.compat.png</a>
+ &#8226;   <a href="#qrcode.image">qrcode.image</a>
+ &#8226;   <a href="#qrcode.image.base">qrcode.image.base</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode.main">qrcode.main</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.image.styledpil"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/image/styledpil.py" type="text/plain"><tt>qrcode.image.styledpil</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.Image">PIL.Image</a>
+ &#8226;   <a href="#qrcode.image">qrcode.image</a>
+ &#8226;   <a href="#qrcode.image.base">qrcode.image.base</a>
+ &#8226;   <a href="#qrcode.image.styles.colormasks">qrcode.image.styles.colormasks</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers">qrcode.image.styles.moduledrawers</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode.image.styles.moduledrawers.pil">qrcode.image.styles.moduledrawers.pil</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.image.styles"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/image/styles/__init__.py" type="text/plain"><tt>qrcode.image.styles</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#qrcode.image">qrcode.image</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode.image.styles.colormasks">qrcode.image.styles.colormasks</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers">qrcode.image.styles.moduledrawers</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.image.styles.colormasks"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/image/styles/colormasks.py" type="text/plain"><tt>qrcode.image.styles.colormasks</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.Image">PIL.Image</a>
+ &#8226;   <a href="#math">math</a>
+ &#8226;   <a href="#qrcode.image.styles">qrcode.image.styles</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode.image.styledpil">qrcode.image.styledpil</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.image.styles.moduledrawers"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/image/styles/moduledrawers/__init__.py" type="text/plain"><tt>qrcode.image.styles.moduledrawers</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#qrcode.image.styles">qrcode.image.styles</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.pil">qrcode.image.styles.moduledrawers.pil</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode.image.styledpil">qrcode.image.styledpil</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.base">qrcode.image.styles.moduledrawers.base</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.pil">qrcode.image.styles.moduledrawers.pil</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.image.styles.moduledrawers.base"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/image/styles/moduledrawers/base.py" type="text/plain"><tt>qrcode.image.styles.moduledrawers.base</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#abc">abc</a>
+ &#8226;   <a href="#qrcode.image.base">qrcode.image.base</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers">qrcode.image.styles.moduledrawers</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode.image.base">qrcode.image.base</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.pil">qrcode.image.styles.moduledrawers.pil</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.image.styles.moduledrawers.pil"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/image/styles/moduledrawers/pil.py" type="text/plain"><tt>qrcode.image.styles.moduledrawers.pil</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#PIL">PIL</a>
+ &#8226;   <a href="#PIL.Image">PIL.Image</a>
+ &#8226;   <a href="#PIL.ImageDraw">PIL.ImageDraw</a>
+ &#8226;   <a href="#qrcode.image.styledpil">qrcode.image.styledpil</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers">qrcode.image.styles.moduledrawers</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.base">qrcode.image.styles.moduledrawers.base</a>
+ &#8226;   <a href="#qrcode.main">qrcode.main</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode.image.styles.moduledrawers">qrcode.image.styles.moduledrawers</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.main"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/main.py" type="text/plain"><tt>qrcode.main</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#bisect">bisect</a>
+ &#8226;   <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.constants">qrcode.constants</a>
+ &#8226;   <a href="#qrcode.exceptions">qrcode.exceptions</a>
+ &#8226;   <a href="#qrcode.image.base">qrcode.image.base</a>
+ &#8226;   <a href="#qrcode.image.pil">qrcode.image.pil</a>
+ &#8226;   <a href="#qrcode.image.pure">qrcode.image.pure</a>
+ &#8226;   <a href="#qrcode.util">qrcode.util</a>
+ &#8226;   <a href="#sys">sys</a>
+ &#8226;   <a href="#typing">typing</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.image.base">qrcode.image.base</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.pil">qrcode.image.styles.moduledrawers.pil</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="qrcode.util"></a>
+  <a target="code" href="///C:/Users/User/AppData/Local/Programs/Python/Python311/Lib/site-packages/qrcode/util.py" type="text/plain"><tt>qrcode.util</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#math">math</a>
+ &#8226;   <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.LUT">qrcode.LUT</a>
+ &#8226;   <a href="#qrcode.base">qrcode.base</a>
+ &#8226;   <a href="#qrcode.exceptions">qrcode.exceptions</a>
+ &#8226;   <a href="#re">re</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.main">qrcode.main</a>
 
   </div>
 
@@ -43611,7 +44129,6 @@ imported by:
  &#8226;   <a href="#babel.dates">babel.dates</a>
  &#8226;   <a href="#babel.localedata">babel.localedata</a>
  &#8226;   <a href="#babel.localtime._unix">babel.localtime._unix</a>
- &#8226;   <a href="#babel.numbers">babel.numbers</a>
  &#8226;   <a href="#babel.plural">babel.plural</a>
  &#8226;   <a href="#base64">base64</a>
  &#8226;   <a href="#colorama.ansitowin32">colorama.ansitowin32</a>
@@ -43755,6 +44272,7 @@ imported by:
  &#8226;   <a href="#pyparsing.core">pyparsing.core</a>
  &#8226;   <a href="#pyparsing.exceptions">pyparsing.exceptions</a>
  &#8226;   <a href="#pyparsing.helpers">pyparsing.helpers</a>
+ &#8226;   <a href="#qrcode.util">qrcode.util</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#re._casefix">re._casefix</a>
  &#8226;   <a href="#re._compiler">re._compiler</a>
@@ -44761,6 +45279,7 @@ imported by:
  &#8226;   <a href="#PIL.Image">PIL.Image</a>
  &#8226;   <a href="#PIL.ImageCms">PIL.ImageCms</a>
  &#8226;   <a href="#PIL.ImageFile">PIL.ImageFile</a>
+ &#8226;   <a href="#PIL.ImageFont">PIL.ImageFont</a>
  &#8226;   <a href="#PIL.ImageMode">PIL.ImageMode</a>
  &#8226;   <a href="#PIL.ImageQt">PIL.ImageQt</a>
  &#8226;   <a href="#PIL.ImageShow">PIL.ImageShow</a>
@@ -44956,6 +45475,8 @@ imported by:
  &#8226;   <a href="#pyparsing.unicode">pyparsing.unicode</a>
  &#8226;   <a href="#pytz">pytz</a>
  &#8226;   <a href="#pywintypes">pywintypes</a>
+ &#8226;   <a href="#qrcode">qrcode</a>
+ &#8226;   <a href="#qrcode.main">qrcode.main</a>
  &#8226;   <a href="#quopri">quopri</a>
  &#8226;   <a href="#re._compiler">re._compiler</a>
  &#8226;   <a href="#runpy">runpy</a>
@@ -45521,6 +46042,7 @@ imports:
  &#8226;   <a href="#sys">sys</a>
  &#8226;   <a href="#tkinter.constants">tkinter.constants</a>
  &#8226;   <a href="#tkinter.messagebox">tkinter.messagebox</a>
+ &#8226;   <a href="#tkinter.simpledialog">tkinter.simpledialog</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#types">types</a>
@@ -45669,7 +46191,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#matplotlib.backends._backend_tk">matplotlib.backends._backend_tk</a>
+    <a href="#SP_emb+exp_beta.py">SP_emb+exp_beta.py</a>
+ &#8226;   <a href="#matplotlib.backends._backend_tk">matplotlib.backends._backend_tk</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.filedialog">tkinter.filedialog</a>
 
   </div>
@@ -47353,7 +47877,6 @@ imported by:
  &#8226;   <a href="#babel.dates">babel.dates</a>
  &#8226;   <a href="#babel.localedata">babel.localedata</a>
  &#8226;   <a href="#babel.localtime._win32">babel.localtime._win32</a>
- &#8226;   <a href="#babel.numbers">babel.numbers</a>
  &#8226;   <a href="#babel.plural">babel.plural</a>
  &#8226;   <a href="#certifi.core">certifi.core</a>
  &#8226;   <a href="#contourpy">contourpy</a>
@@ -47617,6 +48140,11 @@ imported by:
  &#8226;   <a href="#pyparsing.testing">pyparsing.testing</a>
  &#8226;   <a href="#pyparsing.unicode">pyparsing.unicode</a>
  &#8226;   <a href="#pyparsing.util">pyparsing.util</a>
+ &#8226;   <a href="#qrcode.base">qrcode.base</a>
+ &#8226;   <a href="#qrcode.image.base">qrcode.image.base</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.base">qrcode.image.styles.moduledrawers.base</a>
+ &#8226;   <a href="#qrcode.image.styles.moduledrawers.pil">qrcode.image.styles.moduledrawers.pil</a>
+ &#8226;   <a href="#qrcode.main">qrcode.main</a>
  &#8226;   <a href="#tornado">tornado</a>
  &#8226;   <a href="#tornado.autoreload">tornado.autoreload</a>
  &#8226;   <a href="#tornado.concurrent">tornado.concurrent</a>
@@ -47692,7 +48220,6 @@ imports:
 imported by:
     <a href="#babel.core">babel.core</a>
  &#8226;   <a href="#babel.dates">babel.dates</a>
- &#8226;   <a href="#babel.numbers">babel.numbers</a>
  &#8226;   <a href="#babel.plural">babel.plural</a>
  &#8226;   <a href="#packaging.metadata">packaging.metadata</a>
  &#8226;   <a href="#tornado.ioloop">tornado.ioloop</a>
@@ -48647,6 +49174,7 @@ imports:
 imported by:
     <a href="#PIL.IcoImagePlugin">PIL.IcoImagePlugin</a>
  &#8226;   <a href="#PIL.Image">PIL.Image</a>
+ &#8226;   <a href="#PIL.ImageFont">PIL.ImageFont</a>
  &#8226;   <a href="#PIL.JpegImagePlugin">PIL.JpegImagePlugin</a>
  &#8226;   <a href="#PIL.PngImagePlugin">PIL.PngImagePlugin</a>
  &#8226;   <a href="#PIL.TgaImagePlugin">PIL.TgaImagePlugin</a>
@@ -48666,7 +49194,6 @@ imported by:
  &#8226;   <a href="#asyncio.unix_events">asyncio.unix_events</a>
  &#8226;   <a href="#asyncio.windows_utils">asyncio.windows_utils</a>
  &#8226;   <a href="#babel.dates">babel.dates</a>
- &#8226;   <a href="#babel.numbers">babel.numbers</a>
  &#8226;   <a href="#codeop">codeop</a>
  &#8226;   <a href="#configparser">configparser</a>
  &#8226;   <a href="#dateutil.parser">dateutil.parser</a>
