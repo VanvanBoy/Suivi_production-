@@ -365,6 +365,9 @@ class StockApp(ThemedTk):
             submit_button.bind("<space>", lambda e, b=submit_button: b.invoke())
         
     def display_emb(self):
+        
+        #V1
+        """
         ref_batt=self.emb_ref_combo.get()
         if not ref_batt:
             return
@@ -378,8 +381,65 @@ class StockApp(ThemedTk):
             self.emb_listbox_batt.yview_moveto(first_frac)
         except Exception:
             pass
-
+        """
         
+        #V2
+        ref_batt = self.emb_ref_combo.get()
+        if not ref_batt:
+            return
+        
+        # --- Sauvegarde scroll + sélection ---
+        try:
+            first_frac, _ = self.emb_listbox_batt.yview()
+        except Exception:
+            first_frac = 0.0
+        
+        # Valeurs sélectionnées (robuste)
+        selected_values = [
+            self.emb_listbox_batt.get(i)
+            for i in self.emb_listbox_batt.curselection()
+        ]
+        
+        # --- Refresh contenu ---
+        self.emb_listbox_batt.delete(0, tk.END)
+        ref_prod=self.emb_ref_combo.get()
+        conn = self.db_manager.connect()
+        if not conn:
+            messagebox.showerror("Erreur BDD", "Impossible de se connecter à la base de données.")
+            return
+        try: 
+            cursor = conn.cursor()
+            query = "SELECT sp.numero_serie_batterie from suivi_production as sp join produit_voltr as pv on sp.numero_serie_batterie=pv.numero_serie_produit WHERE sp.fermeture_batt=1 and (sp.emballage is null or sp.emballage=0) and (sp.expedition is null or sp.expedition=0) and sp.recyclage is null and pv.reference_produit_voltr= %s"
+            param = (ref_prod,)
+            cursor.execute(query, param)
+            rows = cursor.fetchall()
+            
+            for r in rows:
+                serial = r[0] if r and r[0] is not None else ""
+                self.emb_listbox_batt.insert(tk.END, str(serial))
+                
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Erreur lors de la lecture BDD :\n{e}")
+        finally:
+            try:
+                cursor.close()
+            except:
+                pass
+            conn.close()
+        
+        
+        # --- Restauration sélection ---
+        for idx in range(self.emb_listbox_batt.size()):
+            value = self.emb_listbox_batt.get(idx)
+            if value in selected_values:
+                self.emb_listbox_batt.selection_set(idx)
+        
+        # --- Restauration scroll ---
+        try:
+            self.emb_listbox_batt.yview_moveto(first_frac)
+        except Exception:
+            pass
+
         
     def display_exp(self):
         ref_batt=self.ex_ref_combo.get()
@@ -662,6 +722,13 @@ class StockApp(ThemedTk):
         self.entry = tk.Entry(right_frame, textvariable=self.entry_var)#, state="readonly")  # readonly pour display only
         self.entry.pack(pady=5)
         
+        ttk.Label(right_frame, text='Nombre de batterie par carton').pack(pady=5)
+        
+        self.entry_cart_var = tk.StringVar(value="")
+        self.entry_cart = tk.Entry(right_frame, textvariable=self.entry_cart_var)#, state="readonly")  # readonly pour display only
+        self.entry_cart.pack(pady=5)
+        self.entry_cart.insert(0,'0')
+        
         ttk.Label(right_frame, text="Liste des batteries emballées:").pack(pady=5)
         
         listbox2_frame = tk.Frame(right_frame)
@@ -728,6 +795,16 @@ class StockApp(ThemedTk):
         self.emb_listbox_batt.delete(0, tk.END)
         ref_prod=self.emb_ref_combo.get()
         conn = self.db_manager.connect()
+        
+        if ref_prod=="EMBR036AA":
+            self.entry_cart.delete(0,tk.END)
+            self.entry_cart.insert(0,'4')
+            
+        else : 
+            self.entry_cart.delete(0,tk.END)
+            self.entry_cart.insert(0,'0')
+    
+            
         if ref_prod[:8]=="PPTR018A":
             self.check_var = tk.BooleanVar(value=True)
             self.check.select() 
@@ -973,6 +1050,13 @@ class StockApp(ThemedTk):
         
         
         emb_batts=get_all_numero_serie(self)
+        
+        nb_batt_emb=int(self.entry_cart.get())
+        if nb_batt_emb!=0:
+            if len(emb_batts)!=nb_batt_emb:
+                messagebox.showerror("Erreur nombre batterie", "Incohérence sur le nombre de batteries emballées")
+                return
+        
         if not emb_batts:
             messagebox.showerror('Pas de batterie emballées','Veuillez emballer des batteries')
         
@@ -1031,6 +1115,7 @@ class StockApp(ThemedTk):
                 self.emb_listbox_batt.delete(i)
                 
         batt_emballees=get_selected_batts(self)
+                
         for batt in batt_emballees:
             conn = self.db_manager.connect()
             if not conn:
@@ -1084,6 +1169,11 @@ class StockApp(ThemedTk):
         et on ajoute la ligne dans le Treeview (sans doublon).
         """
         numero_serie_cell = self.emb_numero_serie_batt_entry.get().strip()
+        
+        if numero_serie_cell.startswith('SN :'):
+            numero_serie_cell=numero_serie_cell[5:14]
+            self.emb_numero_serie_batt_entry.delete(0,tk.END)
+            self.emb_numero_serie_batt_entry.insert(0,numero_serie_cell)
     
         # Ne rien faire si longueur différente de 9
         if len(numero_serie_cell) != 9:
@@ -1518,6 +1608,49 @@ class StockApp(ThemedTk):
         
         self.client_entry.bind("<KeyRelease>", update_client_listbox)
         self.client_listbox.bind("<ButtonRelease-1>", select_client)
+        
+        #Entite
+        ttk.Label(left, text="Entite").pack(pady=(8,4), anchor="w")
+        self.entite_var = tk.StringVar()
+        self.entite_entry = ttk.Entry(left, textvariable=self.entite_var, width=40)
+        self.entite_entry.pack(fill="x")
+        self.entite_listbox = tk.Listbox(left, height=6)
+        self.entite_listbox.pack_forget()  # cachée au départ
+        
+        # Charger les projets
+        conn = self.db_manager.connect()
+        self.entite_values = []
+        if conn:
+            try:
+                cursor = conn.cursor()
+                cursor.execute("SELECT operation FROM ref_operation ORDER BY operation")
+                self.entite_values = [row[0] for row in cursor.fetchall()]
+            finally:
+                try: cursor.close()
+                except: pass
+                conn.close()
+        
+        def update_entite_listbox(event):
+            text = self.entite_var.get().lower()
+            matches = [p for p in self.entite_values if text in p.lower()]
+            if matches:
+                self.entite_listbox.delete(0, tk.END)
+                for m in matches:
+                    self.entite_listbox.insert(tk.END, m)
+                self.entite_listbox.pack(fill="x")
+            else:
+                self.entite_listbox.pack_forget()
+        
+        def select_entite(event):
+            sel = self.entite_listbox.curselection()
+            if sel:
+                self.entite_var.set(self.entite_listbox.get(sel[0]))
+            self.entite_listbox.pack_forget()
+        
+        self.entite_entry.bind("<KeyRelease>", update_entite_listbox)
+        self.entite_listbox.bind("<ButtonRelease-1>", select_entite)
+        
+        
         
         # Même chose pour le Projet
         ttk.Label(left, text="Projet").pack(pady=(8,4), anchor="w")
@@ -2105,6 +2238,7 @@ class StockApp(ThemedTk):
             placeholders_final = ", ".join(["%s"] * len(numeros))
             projet=self.project_entry.get()
             nom_client=self.client_entry.get()
+            entite=self.entite_entry.get()
             
             #Obtenir id_client
             if nom_client:
@@ -2147,6 +2281,11 @@ class StockApp(ThemedTk):
             
             set_parts = ["statut = 'expediee'"]
             params_mark = []
+            
+            if entite:
+                set_parts.append("entite = %s")
+                params_mark.append(entite)
+                
             
             if nom_client:
                 if id_client:

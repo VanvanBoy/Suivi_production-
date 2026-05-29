@@ -16,7 +16,7 @@ conn = mysql.connector.connect(
     host="34.77.226.40",
     user="Vanvan",
     password="VoltR99!",
-    database="bdd_18122025",
+    database="cellules_batteries_cloud",
     auth_plugin="mysql_native_password"
 )
 

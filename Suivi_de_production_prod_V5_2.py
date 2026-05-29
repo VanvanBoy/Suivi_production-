@@ -247,7 +247,7 @@ class StockApp(ThemedTk):
             row = df.loc[df["nom_modele"].astype(str) == ref]
             if row.empty:
                 messagebox.showerror("Sélection", "Référence introuvable.")
-                return
+                # return
 
             column_to_stage = {
                 "picking": "picking",
@@ -3068,6 +3068,7 @@ class StockApp(ThemedTk):
                             except Exception:
                                 DCIR_seuil = float(str(seuils["DCIR borne max"]).replace(",", "."))
                             
+                            """
                             # --- assurer la conformité du type cyclage ---
                             conn = self.db_manager.connect()
                             if not conn:
@@ -3078,12 +3079,12 @@ class StockApp(ThemedTk):
                 
                             try:
                                 cursor = conn.cursor()
-                                query = """
+                                query = #rajouter triples guillemets
                                     SELECT type_cyclage
                                     FROM produit_voltr
                                     WHERE numero_serie_produit = %s
                                     LIMIT 1
-                                """
+                                #rajouter triples guillemets
                                 cursor.execute(query, (numero_serie_batterie,))
                                 type_cyclage_bdd = cursor.fetchone()
                             except Exception as e:
@@ -3092,6 +3093,7 @@ class StockApp(ThemedTk):
                                 print(f"[SQL] {numero_serie_batterie} -> {e}")
                                
                                 type_cyclage_bdd = None
+                            
                             finally:
                                 try:
                                     cursor.close()
@@ -3099,7 +3101,7 @@ class StockApp(ThemedTk):
                                     pass
                                 conn.close()
                                 
-                            """
+                            
                                 
                             if type_cyclage != type_cyclage_bdd:
                                 self.fail_tree.insert("", "end", values=(numero_serie_batterie, emplacement, "Mauvais type cyclage"))
@@ -3231,6 +3233,13 @@ class StockApp(ThemedTk):
                                 try:
                                     cur = conn.cursor()
                                     
+                                    request='Select valeur_test_capa from suivi_production where numero_serie_batterie =%s'
+                                    param=(numero_serie_batterie,)
+                                    cur.execute(request,param)
+                                    result=cur.fetchone()
+                                    if result is not None:
+                                        cur.execute("update suivi_production set valeur_capa_ko=valeur_test_capa, date_capa_ko=date_test_capa where numero_serie_batterie =%s",(numero_serie_batterie,))
+                                        
                                     sql = """
                                         UPDATE suivi_production
                                         SET valeur_test_capa = %s,
@@ -3260,6 +3269,44 @@ class StockApp(ThemedTk):
                                 causes = []
                                 if indic_capa == "NOK":
                                     causes.append("Capacité")
+                                    conn = self.db_manager.connect()
+                                    cur = conn.cursor()
+                                    request='Select valeur_test_capa from suivi_production where numero_serie_batterie =%s'
+                                    param=(numero_serie_batterie,)
+                                    cur.execute(request,param)
+                                    result=cur.fetchone()
+                                    if result is None:
+                                        sql = """
+                                            UPDATE suivi_production
+                                            SET valeur_test_capa = %s,
+                                            DCIR = %s,
+                                            date_test_capa = NOW(),
+                                            date_DCIR = NOW()
+                                            WHERE numero_serie_batterie = %s
+                                        """
+                                
+                                        params = (capa_dch,DCIR,numero_serie_batterie)
+                                        cur.execute(sql, params)
+                                        
+                                        
+                                    
+                                    else :
+                                        cur.execute("update suivi_production set valeur_capa_ko = valeur_test_capa, date_capa_ko = date_test_capa where numero_serie_batterie = %s",(numero_serie_batterie,))
+                                        sql = """
+                                            UPDATE suivi_production
+                                            SET valeur_test_capa = %s,
+                                            DCIR = %s,
+                                            date_test_capa = NOW(),
+                                            date_DCIR = NOW()
+                                            WHERE numero_serie_batterie = %s
+                                        """
+                                
+                                        params = (capa_dch,DCIR,numero_serie_batterie)
+                                        cur.execute(sql, params)                      
+                                    
+                                    conn.commit()
+                                    conn.close()
+                                    
                                 if indic_v == "NOK":
                                     causes.append("Tension")
                                 if indic_t == "NOK":
@@ -3509,6 +3556,14 @@ class StockApp(ThemedTk):
                                 try:
                                     cur = conn.cursor()
                                     
+                                    request='Select valeur_test_capa from suivi_production where numero_serie_batterie =%s'
+                                    param=(numero_serie_batterie,)
+                                    cur.execute(request,param)
+                                    result=cur.fetchone()
+                                    if result is not None:
+                                        cur.execute("update suivi_production set valeur_capa_ko=valeur_test_capa, date_capa_ko=date_test_capa where numero_serie_batterie =%s",(numero_serie_batterie,))
+   
+                                    
                                     sql = """
                                         UPDATE suivi_production
                                         SET valeur_test_capa = %s,
@@ -3538,6 +3593,39 @@ class StockApp(ThemedTk):
                                 causes = []
                                 if indic_capa == "NOK":
                                     causes.append("Capacité")
+                                    conn = self.db_manager.connect()
+                                    cur = conn.cursor()
+                                    request='Select valeur_test_capa from suivi_production where numero_serie_batterie =%s'
+                                    param=(numero_serie_batterie,)
+                                    cur.execute(request,param)
+                                    result=cur.fetchone()
+                                    if result is None:
+                                        sql = """
+                                            UPDATE suivi_production
+                                            SET valeur_test_capa = %s,
+                                            DCIR = %s,
+                                            date_test_capa = NOW(),
+                                            date_DCIR = NOW()
+                                            WHERE numero_serie_batterie = %s
+                                        """
+                                
+                                        params = (capa_dch,DCIR,numero_serie_batterie)
+                                        cur.execute(sql, params)
+                                    
+                                    else :
+                                        cur.execute("update suivi_production set valeur_capa_ko=valeur_test_capa, date_capa_ko=date_test_capa where numero_serie_batterie =%s",(numero_serie_batterie,))
+                                        sql = """
+                                            UPDATE suivi_production
+                                            SET valeur_test_capa = %s,
+                                            DCIR = %s,
+                                            date_test_capa = NOW(),
+                                            date_DCIR = NOW()
+                                            WHERE numero_serie_batterie = %s
+                                        """
+                                
+                                        params = (capa_dch,DCIR,numero_serie_batterie)
+                                        cur.execute(sql, params)  
+                                    
                                 if indic_v == "NOK":
                                     causes.append("Tension")
                                 if indic_t == "NOK":
