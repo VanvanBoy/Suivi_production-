@@ -1,5 +1,5 @@
 ('C:\\Users\\User\\Desktop\\GitHub\\IHM suivi de '
- 'prod\\build\\SP_emb+exp_prod_V3\\PYZ-00.pyz',
+ 'prod\\build\\Sp_emb+exp_prod_V3\\PYZ-00.pyz',
  [('PIL',
    'C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PIL\\__init__.py',
    'PYMODULE'),

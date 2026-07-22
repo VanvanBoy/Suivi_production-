@@ -1015,6 +1015,22 @@ class StockApp(ThemedTk):
             except:
                 pass
             
+        def charger_test():
+            # Charger le fichier Excel
+            fichier_excel = r"G:\Drive partagés\VoltR\2_Sales\2_Clients\Somfy\1_Fourniture\1_Sur mesure\10_Banc de Tests\Banc de test fin de ligne\IHM_BANC_TEST_SOMFY.xlsm"            
+            # Lecture de la feuille "Simple Data" sans utiliser la première ligne comme en-tête
+            df = pd.read_excel(fichier_excel, sheet_name="Simple Data", header=None)
+            
+            # Récupération des valeurs
+            current_15w = df.iloc[3, 5]      # F4
+            current_5w = df.iloc[1, 5]       # F2
+            charge_solaire = df.iloc[2, 6]   # G3
+            
+            # Affectation aux variables Tkinter
+            current_15w_var.set(current_15w)
+            current_5w_var.set(current_5w)
+            charge_solaire_var.set(charge_solaire)
+            
         def enregistrer():
             
             conn = self.db_manager.connect()
@@ -1184,8 +1200,12 @@ class StockApp(ThemedTk):
                                state="readonly",
                                width=10)
         combo15.grid(row=3, column=1)
-
+        
         # L5
+        
+        ttk.Button(main, text="Charger les valeurs de test",command=charger_test).grid(row=4, column=2) 
+
+        # L6
 
         ttk.Label(main, text="SOC Calculé (%)", style="Result.TLabel").grid(row=4, column=0) 
         soc_display = ttk.Entry(main, textvariable=soc_var, state="readonly", width=15)
@@ -1199,6 +1219,7 @@ class StockApp(ThemedTk):
         
     
     #Front
+    
 
     def setup_picking(self, frame):
         

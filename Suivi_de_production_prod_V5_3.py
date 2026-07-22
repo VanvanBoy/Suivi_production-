@@ -3364,7 +3364,7 @@ class StockApp(ThemedTk):
                 pass
             conn.close()
         
-        
+        """
         dossier_path=r"G:\Drive partagés\Résultat cyclage\1_Résultats de cyclage\Fichier en cours"
         dossier_exploites=r"G:\Drive partagés\Résultat cyclage\1_Résultats de cyclage\Fichiers traités\Batteries"
         dossier_ko=r"G:\Drive partagés\Résultat cyclage\1_Résultats de cyclage\Fichiers NOK\Batteries KO"
@@ -3373,7 +3373,7 @@ class StockApp(ThemedTk):
         dossier_path="C:/Users/User/Desktop/MAJ_TEST/Resultats"
         dossier_exploites="C:/Users/User/Desktop/MAJ_TEST/Fichiers_exploites"
         dossier_ko="C:/Users/User/Desktop/MAJ_TEST/Fichiers_non_ok/cellues K.O"
-        """
+    
         """
         dossier_path=r"G:\Drive partagés\VoltR\4_Production\5_Cyclage\1_Résultats de cyclage\Fichier en cours"
         dossier_exploites= "G:/Drive partagés/VoltR/4_Production/5_Cyclage/1_Résultats de cyclage/Fichiers traités/batterie"

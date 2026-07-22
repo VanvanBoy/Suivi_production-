@@ -1,0 +1,5 @@
+('C:\\Users\\User\\Desktop\\suivi_prod_V6_of\\build\\main\\tkcalendar-1.6.1-py3.11.egg',
+ None,
+ {'*.py', '*.pyw', '*.pyd', '*.pyc', 'EGG-INFO', '*.cp311-win_amd64.pyd'},
+ 'DATA',
+ [])

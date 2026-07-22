@@ -25,7 +25,7 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.drawing.image import Image as OpenpyxlImage
 
 
-EXCEL_PATH = r"G:\Drive partagés\VoltR\11_Data\IHM\Instructions IHM\Suivi_prod_par_modele.xlsx" 
+EXCEL_PATH = r"G:\Drive partagés\11_Data\IHM\Instructions IHM\Suivi_prod_par_modele.xlsx" 
 
 class DBManager:
     def __init__(self):
@@ -1083,7 +1083,7 @@ class StockApp(ThemedTk):
                     cursor.execute(query,param)
             
             if self.check_var.get()==False:
-                path = create_packaging_excel(self,numero_emballage=num_emb, save_dir=r"G:\Drive partagés\VoltR\4_Production\8_Picking\Suivi_prod_emballage")
+                path = create_packaging_excel(self,numero_emballage=num_emb, save_dir=r"G:\Drive partagés\4_Production\8_Picking\Suivi_prod_emballage")
                 if path:
                     messagebox.showinfo("Export OK", f"Fichier créé :\n{path}")
                     
@@ -2336,7 +2336,7 @@ class StockApp(ThemedTk):
             
             mode=self.ex_mode_combo.get()
             if mode == "Numero emballage":
-                folder_path =r"G:\Drive partagés\VoltR\4_Production\8_Picking\Suivi_prod_emballage"
+                folder_path =r"G:\Drive partagés\4_Production\8_Picking\Suivi_prod_emballage"
                 
                 files_to_delete =list_emballage
                 # Parcours des fichiers du dossier

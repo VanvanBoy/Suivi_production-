@@ -1,0 +1,5 @@
+openpyxl
+pandas
+mysql-connector-python
+ttkthemes
+Pillow
